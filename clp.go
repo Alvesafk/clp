@@ -1,3 +1,8 @@
+/*
+Author © 2026 alvesafk <migueldealmeidaalves55@gmail.com>
+
+clp, copy the content of a file into your clipboard.
+*/
 package main
 
 import (
@@ -9,6 +14,9 @@ import (
 	"github.com/atotto/clipboard"
 )
 
+// func colorError receives nothing and returns nothing, it's a side effect function to print
+// the basic error message depending if the user terminal has access to the True colors or
+// not.
 func colorError() {
 	if scolor.IsRGBSupported {
 		scolor.RGB(180, 60, 60).BgPrintln("Error:")
@@ -17,6 +25,9 @@ func colorError() {
 	}
 }
 
+// All the logic is on the main function, is a simple program so it's not much, first get
+// the arguments, check if argumenst are different from 2, if not read the file, transforms
+// []byte that was returned out of the file into string and copy onto the clipboard.
 func main() {
 	args := os.Args
 	if len(args) != 2 {
@@ -30,7 +41,7 @@ func main() {
 	if err != nil {
 		colorError()
 
-		fmt.Printf("Was not possible to read %s file.", args[1])
+		fmt.Printf("Was not possible to read %s file.\n", args[1])
 		return
 	}
 
@@ -52,3 +63,9 @@ func main() {
 		ansi.AGreen.BgPrintln("Success, the content is in your clipboard.")
 	}
 }
+
+/*
+INDEX:
+func colorError()
+func main()
+*/
