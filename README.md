@@ -1,5 +1,7 @@
 # clp, copy files to your clipboard
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/Alvesafk/clp)](https://goreportcard.com/report/github.com/Alvesafk/clp)
+
 clp is a utility that i made in 30 minutes just because im too lazy to manually copy a error log, is made in **Go**.
 
 I don't know if it works on Windows, and im not going to test it.
