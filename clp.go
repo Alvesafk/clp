@@ -7,6 +7,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/Alvesafk/scolor"
@@ -29,20 +30,33 @@ func colorError() {
 // the arguments, check if argumenst are different from 2, if not read the file, transforms
 // []byte that was returned out of the file into string and copy onto the clipboard.
 func main() {
-	args := os.Args
-	if len(args) != 2 {
-		colorError()
+	var fileContent []byte
+	var err error
 
-		fmt.Printf("%s usage instructions:\n%s <File-to-clipboard>\n", args[0], args[0])
-		return
-	}
+	stat, _ := os.Stdin.Stat()
+	if (stat.Mode() & os.ModeCharDevice) == 0 {
+		fileContent, err = io.ReadAll(os.Stdin)
+		if err != nil {
+			colorError()
+			fmt.Println("Was not possible to read from Stdin.")
+			return
+		}
+	} else {
+		args := os.Args
+		if len(args) != 2 {
+			colorError()
 
-	fileContent, err := os.ReadFile(string(args[1]))
-	if err != nil {
-		colorError()
+			fmt.Printf("%s usage instructions:\n%s <File-to-clipboard>\n", args[0], args[0])
+			return
+		}
 
-		fmt.Printf("Was not possible to read %s file.\n", args[1])
-		return
+		fileContent, err = os.ReadFile(string(args[1]))
+		if err != nil {
+			colorError()
+
+			fmt.Printf("Was not possible to read %s file.\n", args[1])
+			return
+		}
 	}
 
 	fileContentString := string(fileContent)
